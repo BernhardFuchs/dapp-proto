@@ -1,0 +1,7 @@
+<div class="example-container">
+  <mat-form-field>
+    <input [formControl]="addressForm" matInput placeholder="Enter your eth-address" required>
+    <mat-error *ngIf="addressForm.invalid">{{getErrorMessage()}}</mat-error>
+  </mat-form-field>
+  <button mat-flat-button color="primary" (click)="this.fetchAddress()">Get Info</button>
+</div>
