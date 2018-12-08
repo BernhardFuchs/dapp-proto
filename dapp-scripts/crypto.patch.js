@@ -13,7 +13,7 @@ fs.readFile(f, 'utf8', function (err,data) {
   if (err) {
     return console.log(err);
   }
-  console.log(`Replacing node entry in ${f}`);
+  console.log(`Patching webpack config in: ${f}`);
   var result = data.replace(/node: false/g, 'node: {crypto: true, stream: true}');
 
   fs.writeFile(f, result, 'utf8', function (err) {

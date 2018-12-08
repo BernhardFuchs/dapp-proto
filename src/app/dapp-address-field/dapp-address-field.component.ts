@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { FormControl, Validators } from '@angular/forms';
 
-import { AddressInfoService } from '@services/address-info.service';
+import { AddressInfoService } from '../services';
 
 @Component({
   selector: 'app-dapp-address-field',

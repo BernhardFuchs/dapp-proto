@@ -1,23 +1,16 @@
 import { Injectable } from '@angular/core';
 import { HttpHeaders, HttpClient } from '@angular/common/http';
-import { infuraMain } from '../core/providers.constants';
+import { infuraMain } from '../core';
 import { Observable } from 'rxjs';
 
-@Injectable({
-  providedIn: 'root'
-})
+@Injectable()
 export class ChainInfoService {
+  constructor(private httpClient: HttpClient) {}
 
-  constructor(private httpClient: HttpClient) { }
-
-  public getInfo(): any {
-    const payload = '{"jsonrpc": "2.0", "id": 1, "method": "eth_blockNumber", "params": []}';
-    const headers: HttpHeaders = new HttpHeaders({'Content-Type': 'application/json'});
-    this.httpClient.post(infuraMain.href, payload, {headers})
-      .subscribe(response => {
-        console.log(response);
-        // TODO create interface and map response
-        return new Observable(response.result);
-      });
+  public getInfo(payload: string): Observable<any> {
+    const headers: HttpHeaders = new HttpHeaders({
+      'Content-Type': 'application/json'
+    });
+    return this.httpClient.post(infuraMain.href, payload, { headers });
   }
 }

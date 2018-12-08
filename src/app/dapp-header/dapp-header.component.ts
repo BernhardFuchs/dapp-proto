@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
-import { ChainInfoService } from '@services/chain-info.service';
+import { Store, Select } from '@ngxs/store';
+import { ChainInfoFetchAction, ChainInfoState } from '../dapp-store';
 
 @Component({
   selector: 'app-dapp-header',
@@ -8,12 +9,13 @@ import { ChainInfoService } from '@services/chain-info.service';
 })
 export class DappHeaderComponent implements OnInit {
 
-  public currentBlock: string;
+  @Select(ChainInfoState.getCurrentBlock) currentBlock$;
+  private payload = '{"jsonrpc": "2.0", "id": 1, "method": "eth_blockNumber", "params": []}';
 
-  constructor(private chainInfoService: ChainInfoService) { }
+  constructor(private store$: Store) { }
 
   ngOnInit() {
-    // this.chainInfoService.getInfo().subscribe(result => this.currentBlock = result);
+    this.store$.dispatch(new ChainInfoFetchAction(this.payload));
   }
 
 }

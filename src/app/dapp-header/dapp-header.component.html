@@ -1,4 +1,4 @@
 <mat-toolbar>
-  <span>Decentralized Application Prototype</span>
-  <span>{{ currentBlock }}</span>
+  <div>Decentralized Application Prototype</div>
+  <div class="current-blocks">Current Block: {{ currentBlock$ | async }}</div>
 </mat-toolbar>

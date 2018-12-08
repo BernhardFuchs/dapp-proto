@@ -17,6 +17,7 @@
         "build": {
           "builder": "@angular-devkit/build-angular:browser",
           "options": {
+            "showCircularDependencies": true,
             "outputPath": "dist/dapp-proto",
             "index": "src/index.html",
             "main": "src/main.ts",
