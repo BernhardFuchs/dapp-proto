@@ -1,20 +1,20 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { DappAddressFieldComponent } from './dapp-address-field.component';
+import { DappAddressComponent } from './dapp-address.component';
 
 describe('DappAddressFieldComponent', () => {
-  let component: DappAddressFieldComponent;
-  let fixture: ComponentFixture<DappAddressFieldComponent>;
+  let component: DappAddressComponent;
+  let fixture: ComponentFixture<DappAddressComponent>;
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ DappAddressFieldComponent ]
+      declarations: [ DappAddressComponent ]
     })
     .compileComponents();
   }));
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(DappAddressFieldComponent);
+    fixture = TestBed.createComponent(DappAddressComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

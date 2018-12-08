@@ -1,16 +1,17 @@
 import { Component, OnInit } from '@angular/core';
 import { FormControl, Validators } from '@angular/forms';
+import { Store } from '@ngxs/store';
 
-import { AddressInfoService } from '../services';
+import { AddressInfoFetchAction } from '../dapp-store/address-info.actions';
 
 @Component({
-  selector: 'app-dapp-address-field',
-  templateUrl: './dapp-address-field.component.html',
-  styleUrls: ['./dapp-address-field.component.scss']
+  selector: 'app-dapp-address',
+  templateUrl: './dapp-address.component.html',
+  styleUrls: ['./dapp-address.component.scss']
 })
-export class DappAddressFieldComponent implements OnInit {
+export class DappAddressComponent implements OnInit {
 
-  constructor(private ethereumService: AddressInfoService) { }
+  constructor(private store$: Store) { }
 
   addressForm = new FormControl('', [Validators.required]);
 
@@ -24,7 +25,7 @@ export class DappAddressFieldComponent implements OnInit {
 
   public fetchAddress() {
     console.log('Fetching for Address: ', this.addressForm.value);
-    this.ethereumService.fetchAddress(this.addressForm.value);
+    this.store$.dispatch(new AddressInfoFetchAction(this.addressForm.value));
   }
 
 }

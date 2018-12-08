@@ -14,10 +14,15 @@ export class AddressInfoService {
 
   constructor(@Inject(WEB3) private web3) { }
 
-  public fetchAddress(address: string) {
-    console.log('####Adresse:', address);
-    this.web3.eth.getBalance(address.trim(),
-    (err, wei) => { console.log(this.web3.utils.fromWei(wei, 'ether')); });
+  public async fetchBalance(address: string): Promise<any> {
+    return new Promise((resolve, reject) => {
+      this.web3.eth.getBalance(address.trim(), (error, result) => {
+        if (error) {
+          reject(error);
+        } else {
+          resolve(result);
+        }
+      });
+    });
   }
-
 }

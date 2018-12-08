@@ -1,3 +1,4 @@
-<p>
-  dapp-dashboard works!
-</p>
+<div class="dashboard-container">
+  <div>Address: {{ address$ | async }}</div>
+  <div>Balance: {{ balance$ | async | ether }}</div>
+</div>

@@ -2,7 +2,7 @@ import { State, Action, StateContext, Selector } from '@ngxs/store';
 import { tap, catchError } from 'rxjs/operators';
 import { ChainInfoService } from '../services';
 import { ChainInfoStateModel } from './chain-info.state.model';
-import { ChainInfoFetchAction, ChainInfoSuccessAction, ChainInfoErrorAction } from './chain-info.action';
+import { ChainInfoFetchAction, ChainInfoSuccessAction, ChainInfoErrorAction } from './chain-info.actions';
 
 @State<ChainInfoStateModel>({
   name: 'chain',

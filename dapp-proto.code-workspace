@@ -6,8 +6,10 @@
   ],
   "settings": {
     "cSpell.words": [
+      "Validators",
       "dapp",
-      "proto"
+      "proto",
+      "xdescribe"
     ]
   }
 }
