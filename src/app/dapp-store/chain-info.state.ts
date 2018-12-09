@@ -1,4 +1,5 @@
 import { State, Action, StateContext, Selector } from '@ngxs/store';
+import { Observable } from 'rxjs';
 import { tap, catchError } from 'rxjs/operators';
 import { ChainInfoService } from '../services';
 import { ChainInfoStateModel } from './chain-info.state.model';
@@ -19,7 +20,7 @@ export class ChainInfoState {
   }
 
   @Action(ChainInfoFetchAction)
-  fetchChainInfo(ctx: StateContext<ChainInfoStateModel>, action: ChainInfoFetchAction) {
+  fetchChainInfo(ctx: StateContext<ChainInfoStateModel>, action: ChainInfoFetchAction): Observable<any> {
     ctx.patchState({
       currentBlock: ''
     });

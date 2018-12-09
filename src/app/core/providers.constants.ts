@@ -1,1 +1,5 @@
-export const infuraMain: URL = new URL('https://mainnet.infura.io/v3/415825d8327040cea16b0c6d870ea5e5');
+export const infuraMain: URL = new URL('https://mainnet.infura.io/v3/ca3e735938744c5d8602791353402bc4');
+export const ethplorerApi: URL = new URL('https://api.ethplorer.io');
+export const ethplorerPaths = {
+  getAddressInfo: 'getAddressInfo'
+};
