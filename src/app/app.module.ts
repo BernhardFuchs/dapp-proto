@@ -11,6 +11,8 @@ import { DappHeaderComponent } from './dapp-header/dapp-header.component';
 import { DappDashboardComponent } from './dapp-dashboard/dapp-dashboard.component';
 import { DappAddressComponent } from './dapp-address/dapp-address.component';
 import { EtherPipe } from './dapp-dashboard/ether.pipe';
+import { TokenTableComponent } from './dapp-dashboard/token-table/token-table.component';
+import { MatTableModule, MatPaginatorModule, MatSortModule } from '@angular/material';
 
 @NgModule({
   declarations: [
@@ -18,7 +20,8 @@ import { EtherPipe } from './dapp-dashboard/ether.pipe';
     DappHeaderComponent,
     DappAddressComponent,
     DappDashboardComponent,
-    EtherPipe
+    EtherPipe,
+    TokenTableComponent
   ],
   imports: [
     BrowserModule,
@@ -27,7 +30,10 @@ import { EtherPipe } from './dapp-dashboard/ether.pipe';
     GuiModule,
     FormsModule,
     ReactiveFormsModule,
-    BrowserAnimationsModule
+    BrowserAnimationsModule,
+    MatTableModule,
+    MatPaginatorModule,
+    MatSortModule
   ],
   providers: [],
   bootstrap: [AppComponent]

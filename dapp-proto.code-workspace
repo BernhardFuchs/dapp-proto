@@ -6,9 +6,11 @@
   ],
   "settings": {
     "cSpell.words": [
+      "Paginator",
       "Validators",
       "binance",
       "dapp",
+      "datasource",
       "etherscan",
       "ethplorer",
       "freekey",

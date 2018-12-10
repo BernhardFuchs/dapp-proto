@@ -9,13 +9,15 @@ import { BalanceInfoState } from './balance-info.state';
 import { Web3Api } from '../services/web3.api';
 import { EthplorerApi } from '../services/ethplorer.api';
 import { AddressInfoState } from './address-info.state';
+import { TokenTableState } from './token-table.state';
 
 @NgModule({
   imports: [
     NgxsModule.forRoot([
       ChainInfoState,
       BalanceInfoState,
-      AddressInfoState
+      AddressInfoState,
+      TokenTableState
     ]),
     NgxsReduxDevtoolsPluginModule.forRoot({
       disabled: environment.production
