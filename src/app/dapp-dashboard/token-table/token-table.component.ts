@@ -15,11 +15,11 @@ import { map, tap, mergeMap } from 'rxjs/operators';
 export class TokenTableComponent implements OnInit {
   @ViewChild(MatPaginator) paginator: MatPaginator;
   @ViewChild(MatSort) sort: MatSort;
-  tokensLength$: Observable<number>;
   dataSource: TokenTableDataSource;
   tableData: TokenTableItem[];
-  pagedData$: Observable<TokenTableItem[]>;
-  totalData$: Observable<TokenTableItem[]>;
+  // tokensLength$: Observable<number>;
+  pagedData$: BehaviorSubject<TokenTableItem[]>;
+  // totalData$: Observable<TokenTableItem[]>;
 
   pageSizeOptions = [7, 13, 23, 41];
   pageSize = this.pageSizeOptions[0];
@@ -31,6 +31,7 @@ export class TokenTableComponent implements OnInit {
 
   ngOnInit(): void {
     this.dataSource = new TokenTableDataSource(this.paginator, this.sort);
+    this.pagedData$ = this.dataSource.getPagedItems();
     /* this.dataSource.totalItems$.subscribe(
       (value: TokenTableItem[]) => this.tableData = value
     ); */
@@ -41,12 +42,15 @@ export class TokenTableComponent implements OnInit {
       tap(() => console.log('#####comp total items', this.totalData$)),
       map(() => this.tableData)
     ); */
-    this.tokensLength$ = this.dataSource.getTableLength();
   }
 
   public handlePage(pageEvent: PageEvent) {
-    this.pageSize = pageEvent.pageSize;
-    this.pageIndex = pageEvent.pageIndex;
+    this.pagedData$.pipe(map((result) => {
+      console.log('#####Result', result);
+      this.pagedData$.next(result);
+      this.pageSize = pageEvent.pageSize;
+      this.pageIndex = pageEvent.pageIndex;
+    }));
   }
 
 }

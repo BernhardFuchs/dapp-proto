@@ -46,7 +46,7 @@ export class TokenTableDataSource extends DataSource<TokenTableItem> {
 
   }
 
-  getPagedItems(): Observable<TokenTableItem[]> {
+  getPagedItems(): BehaviorSubject<TokenTableItem[]> {
     return Observable.create(this.paginator.page).pipe(
       tap(() => console.log('#####pagedItems', this.pagedItems$.value)),
       map(() => this.pagedItems$.next(this.getPagedData([...this.totalItems$.value])))
