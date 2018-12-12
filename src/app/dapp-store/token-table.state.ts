@@ -1,5 +1,5 @@
 import { State, Action, StateContext, Selector } from '@ngxs/store';
-import { TokenTableStateModel } from './token-table.state.model';
+import { TokenTableStateModel, TokenTableItem } from './token-table.state.model';
 import { AddressInfoSuccessAction } from './address-info.actions';
 
 export const defaultState: TokenTableStateModel = {
@@ -13,8 +13,13 @@ export const defaultState: TokenTableStateModel = {
 export class TokenTableState {
 
   @Selector()
-  static getTokenTableItems(state: TokenTableStateModel) {
+  static getTokenTableItems(state: TokenTableStateModel): TokenTableItem[] {
     return state.tokens;
+  }
+
+  @Selector()
+  static getTokensLength(state: TokenTableStateModel): number {
+    return state.tokens.length;
   }
 
   @Action(AddressInfoSuccessAction)

@@ -17,9 +17,11 @@
   </table>
 
   <mat-paginator #paginator
-      [length]="dataSource.data.length"
-      [pageIndex]="0"
-      [pageSize]="50"
-      [pageSizeOptions]="[25, 50, 100, 250]">
+      [length]="this.dataSource.totalItems$.value?.length"
+      [pageIndex]="pageIndex"
+      [pageSize]="pageSize"
+      [pageSizeOptions]="pageSizeOptions"
+      [showFirstLastButtons]=true
+      (page)="pageEvent = handlePage($event)">
   </mat-paginator>
 </div>

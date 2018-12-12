@@ -2,9 +2,4 @@
   <div>Address: {{ address$ | async }}</div>
   <div>Balance: {{ balance$ | async | ether }}</div>
   <app-token-table></app-token-table>
-  <div *ngIf="(tokens$ | async) as tokens">
-    <div *ngFor="let token of tokens">
-      Token name: {{ token.tokenInfo.name }}
-    </div>
-  </div>
 </div>
