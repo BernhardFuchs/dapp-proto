@@ -1,12 +1,9 @@
 import { State, Action, StateContext, Selector } from '@ngxs/store';
-import { TokenTableStateModel, TokenTableItem } from './token-table.state.model';
+import { TokenTableStateModel } from './token-table.state.model';
 import { AddressInfoSuccessAction } from './address-info.actions';
 
 export const defaultState: TokenTableStateModel = {
-  tokens: [{
-    symbol: '',
-    name: ''
-  }]
+  tokens: []
 };
 
 @State<TokenTableStateModel>({
@@ -22,13 +19,13 @@ export class TokenTableState {
 
   @Action(AddressInfoSuccessAction)
   mapTokenTableData(ctx: StateContext<TokenTableStateModel>, action: AddressInfoSuccessAction) {
-    const newState: TokenTableStateModel = defaultState;
+    const newState: TokenTableStateModel = {tokens: []};
     action.addressInfo.tokens.map((token) => newState.tokens.push(
       {
         symbol: token.tokenInfo.symbol,
         name: token.tokenInfo.name
       }
     ));
-    ctx.setState(newState);
+    ctx.patchState(newState);
   }
 }
