@@ -8,6 +8,8 @@
     "test": "ng test",
     "lint": "ng lint",
     "e2e": "ng e2e",
+    "docker:prepare": "docker build -t nginx-server -f Dockerfile ./docker && docker stop dapp && docker rm dapp && docker run --name dapp -P -d nginx-server:latest ",
+    "docker:deploy": "docker cp ./docker/nginx.conf dapp:/etc/nginx/nginx.conf && docker cp ./docker/dist/dapp-proto/. dapp:/www",
     "postinstall": "node ./dapp-scripts/crypto.patch.js"
   },
   "private": true,

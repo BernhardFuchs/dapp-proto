@@ -7,6 +7,7 @@
 /dist
 /tmp
 /out-tsc
+/docker/dist
 
 # dependencies
 /node_modules
