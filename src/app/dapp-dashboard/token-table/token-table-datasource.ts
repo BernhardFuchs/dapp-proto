@@ -1,7 +1,7 @@
 import { DataSource } from '@angular/cdk/collections';
 import { MatPaginator, MatSort } from '@angular/material';
-import { map, mergeMap, switchMap, tap } from 'rxjs/operators';
-import { Observable, of as observableOf, combineLatest, merge, BehaviorSubject } from 'rxjs';
+import { map, mergeMap, tap } from 'rxjs/operators';
+import { Observable, of as observableOf, merge, BehaviorSubject } from 'rxjs';
 import { Select } from '@ngxs/store';
 import { TokenTableItem } from 'src/app/dapp-store/token-table.state.model';
 import { TokenTableState } from 'src/app/dapp-store/token-table.state';
@@ -27,6 +27,8 @@ export class TokenTableDataSource extends DataSource<TokenTableItem> {
    */
   connect(): Observable<TokenTableItem[]> {
     this.tokenTableItems$.subscribe(item => this.totalItems$.next(item));
+
+    // init on first connect
     if (this.totalItems$.value === undefined) {
       this.totalItems$.next([]);
       this.setPaginatorLength();
@@ -35,36 +37,19 @@ export class TokenTableDataSource extends DataSource<TokenTableItem> {
     // stream for the data-table to consume.
     const dataMutations = [
       observableOf(this.totalItems$),
+      this.paginator.page,
       this.sort.sortChange
     ];
 
     return merge(...dataMutations).pipe(
-      map(() => this.totalItems$.next(this.getSortedData([...this.totalItems$.value]))),
-      tap(() => console.log('#####totalItems', this.totalItems$.value)),
+      map(() => this.totalItems$.next(this.getPagedData(this.getSortedData([...this.totalItems$.value])))),
       mergeMap(() => this.totalItems$)
     );
 
   }
 
-  getPagedItems(): BehaviorSubject<TokenTableItem[]> {
-    return Observable.create(this.paginator.page).pipe(
-      tap(() => console.log('#####pagedItems', this.pagedItems$.value)),
-      map(() => this.pagedItems$.next(this.getPagedData([...this.totalItems$.value])))
-    );
-  }
-
-  getTableLength(): Observable<number> {
-    return this.totalItems$.pipe(
-      map(() => this.calculateTableLength())
-    );
-  }
-
   private setPaginatorLength() {
     this.paginator.length = this.totalItems$.value.length;
-  }
-
-  private calculateTableLength(): number {
-    return this.totalItems$.value !== undefined ? this.totalItems$.value.length : 0;
   }
 
   /**
