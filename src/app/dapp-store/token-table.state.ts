@@ -1,6 +1,7 @@
 import { State, Action, StateContext, Selector } from '@ngxs/store';
 import { TokenTableStateModel, TokenTableItem } from './token-table.state.model';
 import { AddressInfoSuccessAction } from './address-info.actions';
+import { Observable } from 'rxjs';
 
 export const defaultState: TokenTableStateModel = {
   tokens: []
