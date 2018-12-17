@@ -4,12 +4,16 @@ import { map } from 'rxjs/operators';
 import { Observable, merge, BehaviorSubject } from 'rxjs';
 import { TokenTableItem } from 'src/app/dapp-store/token-table.state.model';
 import { DataService } from 'src/app/services/data.service';
+import { Injectable } from '@angular/core';
 
 /**
  * Data source for the TokenTable view. This class should
  * encapsulate all logic for fetching and manipulating the displayed data
  * (including sorting, pagination, and filtering).
  */
+ @Injectable({
+  providedIn: 'root'
+})
 export class TokenTableDataSource extends DataSource<TokenTableItem> {
   _filterChange = new BehaviorSubject('');
 
