@@ -21,7 +21,7 @@ export class TokenTableComponent implements OnInit {
   _internalService: DataService | null;
   dataSource: TokenTableDataSource | null;
 
-  constructor(public dataService: DataService) {}
+  constructor() {}
 
   @ViewChild(MatPaginator) paginator: MatPaginator;
   @ViewChild(MatSort) sort: MatSort;
@@ -51,10 +51,8 @@ export class TokenTableComponent implements OnInit {
     this._internalService = new DataService();
     console.log('####AppComponent loadData this._internalService: ', this._internalService);
     this.dataSource = new TokenTableDataSource(this._internalService, this.paginator, this.sort);
-    console.log('####AppComponent loadData this.dataService: ', this.dataService);
     fromEvent(this.filter.nativeElement, 'keyup')
       .subscribe(() => {
-        console.log('####AppComponent loadData fromEvent subscribe this.dataService: ', this.dataService);
         if (!this.dataSource) {
           console.log('####AppComponent loadData fromEvent subscribe in if');
           return;

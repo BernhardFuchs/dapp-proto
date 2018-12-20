@@ -1,7 +1,6 @@
 import { State, Action, StateContext, Selector } from '@ngxs/store';
 import { TokenTableStateModel, TokenTableItem } from './token-table.state.model';
-import { AddressInfoSuccessAction } from './address-info.actions';
-import { Observable } from 'rxjs';
+import { AddressInfoSuccessAction, AddressInfoFetchAction } from './address-info.actions';
 
 export const defaultState: TokenTableStateModel = {
   tokens: []
@@ -33,5 +32,10 @@ export class TokenTableState {
       }
     ));
     ctx.patchState(newState);
+  }
+
+  @Action(AddressInfoFetchAction)
+  reset(ctx: StateContext<TokenTableStateModel>) {
+    ctx.patchState(defaultState);
   }
 }

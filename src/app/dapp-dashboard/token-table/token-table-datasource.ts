@@ -15,6 +15,7 @@ import { Injectable } from '@angular/core';
   providedIn: 'root'
 })
 export class TokenTableDataSource extends DataSource<TokenTableItem> {
+  _dataChange: BehaviorSubject<TokenTableItem[]> = new BehaviorSubject<TokenTableItem[]>([]);
   _filterChange = new BehaviorSubject('');
 
   get filter(): string {
@@ -47,17 +48,21 @@ export class TokenTableDataSource extends DataSource<TokenTableItem> {
     // Combine everything that affects the rendered data into one update
     // stream for the data-table to consume.
     const dataMutations = [
-      this._internalService.dataChange,
+      this._dataChange,
       this._sort.sortChange,
       this._filterChange,
       this._paginator.page,
     ];
 
-    this._internalService.getAllItems();
+    this._internalService.getAllItems().subscribe(data => {
+      this._dataChange.next(data);
+    });
 
     return merge(...dataMutations).pipe(map( () => {
       // Filter data
-      this.filteredData = this._internalService.data.slice().filter((item: TokenTableItem) => {
+      console.log('####DataCahange merge object: ', this._dataChange);
+      console.log('####DataCahange merge value: ', this._dataChange.value);
+      this.filteredData = this._dataChange.value.slice().filter((item: TokenTableItem) => {
         const searchStr = (item.symbol + item.name).toLowerCase();
         return searchStr.indexOf(this.filter.toLowerCase()) !== -1;
       });
