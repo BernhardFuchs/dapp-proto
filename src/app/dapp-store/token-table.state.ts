@@ -25,17 +25,19 @@ export class TokenTableState {
   @Action(AddressInfoSuccessAction)
   mapTokenTableData(ctx: StateContext<TokenTableStateModel>, action: AddressInfoSuccessAction) {
     const newState: TokenTableStateModel = {tokens: []};
-    action.addressInfo.tokens.map((token) => newState.tokens.push(
-      {
-        symbol: token.tokenInfo.symbol,
-        name: token.tokenInfo.name
-      }
-    ));
+    if (action.addressInfo.tokens !== undefined) {
+      action.addressInfo.tokens.map((token) => newState.tokens.push(
+        {
+          symbol: token.tokenInfo.symbol,
+          name: token.tokenInfo.name
+        }
+      ));
+    }
     ctx.patchState(newState);
   }
 
   @Action(AddressInfoFetchAction)
   reset(ctx: StateContext<TokenTableStateModel>) {
-    ctx.patchState(defaultState);
+    ctx.setState(defaultState);
   }
 }
