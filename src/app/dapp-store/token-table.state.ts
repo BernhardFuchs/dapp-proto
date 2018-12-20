@@ -1,6 +1,7 @@
 import { State, Action, StateContext, Selector } from '@ngxs/store';
 import { TokenTableStateModel, TokenTableItem } from './token-table.state.model';
 import { AddressInfoSuccessAction, AddressInfoFetchAction } from './address-info.actions';
+import { isUndefined as _isUndefined } from 'lodash';
 
 export const defaultState: TokenTableStateModel = {
   tokens: []
@@ -25,7 +26,7 @@ export class TokenTableState {
   @Action(AddressInfoSuccessAction)
   mapTokenTableData(ctx: StateContext<TokenTableStateModel>, action: AddressInfoSuccessAction) {
     const newState: TokenTableStateModel = {tokens: []};
-    if (action.addressInfo.tokens !== undefined) {
+    if (!_isUndefined(action.addressInfo.tokens)) {
       action.addressInfo.tokens.map((token) => newState.tokens.push(
         {
           symbol: token.tokenInfo.symbol,
