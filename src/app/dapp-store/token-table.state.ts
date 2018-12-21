@@ -26,10 +26,7 @@ export class TokenTableState {
   @Action(AddressInfoSuccessAction)
   mapTokenTableData(ctx: StateContext<TokenTableStateModel>, action: AddressInfoSuccessAction) {
     const newState: TokenTableStateModel = {tokens: []};
-    console.log('####Tokens: ', action.addressInfo.tokens);
-    if (_isUndefined(action.addressInfo.tokens)) {
-      action.addressInfo.tokens = [];
-    } else {
+    if (!_isUndefined(action.addressInfo.tokens)) {
       action.addressInfo.tokens.map((token) => newState.tokens.push(
         {
           symbol: token.tokenInfo.symbol,
