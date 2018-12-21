@@ -2108,6 +2108,8 @@ MIT
 
 @angular/material/table
 
+@angular/material/icon
+
 @angular/material/core
 
 @angular/material/select
