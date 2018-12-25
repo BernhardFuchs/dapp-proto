@@ -1,4 +1,8 @@
 <mat-toolbar>
-  <div>Decentralized Application Prototype</div>
+  <div>
+    <a [routerLink]="['/home']">
+      Decentralized Application Prototype
+    </a>
+  </div>
   <div class="current-blocks">Current Block: {{ currentBlock$ | async }}</div>
 </mat-toolbar>
