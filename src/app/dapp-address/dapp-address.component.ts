@@ -3,6 +3,7 @@ import { FormControl, Validators } from '@angular/forms';
 import { Store } from '@ngxs/store';
 
 import { AddressInfoFetchAction } from '../dapp-store/address-info.actions';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-dapp-address',
@@ -11,7 +12,10 @@ import { AddressInfoFetchAction } from '../dapp-store/address-info.actions';
 })
 export class DappAddressComponent implements OnInit {
 
-  constructor(private store$: Store) { }
+  constructor(
+    private store$: Store,
+    private router: Router
+  ) { }
 
   addressForm = new FormControl('', [Validators.required]);
 
@@ -26,6 +30,7 @@ export class DappAddressComponent implements OnInit {
   public fetchAddress() {
     console.log('Fetching for Address: ', this.addressForm.value);
     this.store$.dispatch(new AddressInfoFetchAction(this.addressForm.value));
+    this.router.navigateByUrl('/dashboard');
   }
 
 }

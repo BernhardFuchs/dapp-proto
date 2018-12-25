@@ -8,32 +8,26 @@ import { GuiModule } from './gui/gui.module';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { DappStoreModule } from './dapp-store';
 import { DappHeaderComponent } from './dapp-header/dapp-header.component';
-import { DappDashboardComponent } from './dapp-dashboard/dapp-dashboard.component';
 import { DappAddressComponent } from './dapp-address/dapp-address.component';
-import { EtherPipe } from './dapp-dashboard/ether.pipe';
-import { TokenTableComponent } from './dapp-dashboard/token-table/token-table.component';
-import { MatTableModule, MatPaginatorModule, MatSortModule } from '@angular/material';
+import { DappHomeComponent } from './dapp-home/dapp-home.component';
+import { SharedModule } from './shared/shared.module';
 
 @NgModule({
   declarations: [
     AppComponent,
     DappHeaderComponent,
     DappAddressComponent,
-    DappDashboardComponent,
-    EtherPipe,
-    TokenTableComponent
+    DappHomeComponent
   ],
   imports: [
     BrowserModule,
     DappStoreModule,
-    AppRoutingModule,
     GuiModule,
     FormsModule,
     ReactiveFormsModule,
     BrowserAnimationsModule,
-    MatTableModule,
-    MatPaginatorModule,
-    MatSortModule
+    SharedModule,
+    AppRoutingModule
   ],
   providers: [],
   bootstrap: [AppComponent]
