@@ -11,7 +11,7 @@
     "docker:prepare": "docker build -t nginx-server -f Dockerfile ./docker && docker stop dapp && docker rm dapp && docker run --name dapp -P -d nginx-server:latest ",
     "docker:deploy": "docker cp ./docker/nginx.conf dapp:/etc/nginx/nginx.conf && docker cp ./docker/dist/dapp-proto/. dapp:/www",
     "github:prepare": "ng build --prod --base-href https://BernhardFuchs.github.io/dapp-proto/ --output-path docs",
-    "github:deploy": "node git-page-deploy.js",
+    "github:deploy": "node ./dapp-scripts/git-page.deploy.js",
     "postinstall": "node ./dapp-scripts/crypto.patch.js"
   },
   "private": true,
@@ -55,6 +55,7 @@
     "karma-jasmine-html-reporter": "^0.2.2",
     "ts-node": "~7.0.0",
     "tslint": "~5.11.0",
-    "typescript": "~3.1.6"
+    "typescript": "~3.1.6",
+    "colors": "^1.3.0"
   }
 }
