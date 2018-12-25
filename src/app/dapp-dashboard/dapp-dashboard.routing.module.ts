@@ -4,7 +4,7 @@ import { RouterModule } from '@angular/router';
 
 const routes = [
   {
-    path: 'dashboard',
+    path: '',
     component: DappDashboardComponent
   }
 ];

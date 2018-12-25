@@ -11,7 +11,6 @@ import { DappHeaderComponent } from './dapp-header/dapp-header.component';
 import { DappAddressComponent } from './dapp-address/dapp-address.component';
 import { DappHomeComponent } from './dapp-home/dapp-home.component';
 import { SharedModule } from './shared/shared.module';
-import { DappDashboardModule } from './dapp-dashboard/dapp-dashboard.module';
 
 @NgModule({
   declarations: [
@@ -23,7 +22,6 @@ import { DappDashboardModule } from './dapp-dashboard/dapp-dashboard.module';
   imports: [
     BrowserModule,
     DappStoreModule,
-    DappDashboardModule,
     GuiModule,
     FormsModule,
     ReactiveFormsModule,

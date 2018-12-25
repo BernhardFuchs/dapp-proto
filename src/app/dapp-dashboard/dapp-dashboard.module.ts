@@ -16,8 +16,7 @@ import { DappDashboardRoutingModule } from './dapp-dashboard.routing.module';
     DappDashboardComponent
   ],
   imports: [
-    // routes are defined in global Routing module
-    // DappDashboardRoutingModule,
+    DappDashboardRoutingModule,
     CommonModule,
     SharedModule,
     GuiModule,

@@ -1,7 +1,6 @@
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
 import { DappHomeComponent } from './dapp-home/dapp-home.component';
-import { DappDashboardComponent } from './dapp-dashboard/dapp-dashboard.component';
 
 const routes: Routes = [
   {
@@ -15,7 +14,7 @@ const routes: Routes = [
   },
   {
     path: 'dashboard',
-    component: DappDashboardComponent
+    loadChildren: './dapp-dashboard/dapp-dashboard.module#DappDashboardModule'
   },
   {
     path: '**',
