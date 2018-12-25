@@ -1,6 +1,6 @@
 import { Pipe, PipeTransform, Inject } from '@angular/core';
 import { isEmpty as _isEmpty } from 'lodash';
-import { WEB3 } from '../core/';
+import { WEB3 } from '../../core/';
 
 @Pipe({
   name: 'ether'
