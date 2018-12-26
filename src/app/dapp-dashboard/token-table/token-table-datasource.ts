@@ -19,14 +19,10 @@ export class TokenTableDataSource extends DataSource<TokenTableItem> {
   _filterChange = new BehaviorSubject('');
 
   get filter(): string {
-    console.log('####DataSource getFilter FilterChange: ', this._filterChange);
-    console.log('####DataSource getFilter FilterChangeValue: ', this._filterChange.value);
     return this._filterChange.value;
   }
 
   set filter(filter: string) {
-    console.log('####DataSource setFilter FilterChange: ', this._filterChange);
-    console.log('####DataSource setFilter FilterChangeValue: ', this._filterChange.value);
     this._filterChange.next(filter);
   }
 
@@ -60,21 +56,16 @@ export class TokenTableDataSource extends DataSource<TokenTableItem> {
 
     return merge(...dataMutations).pipe(map( () => {
       // Filter data
-      console.log('####DataCahange merge object: ', this._dataChange);
-      console.log('####DataCahange merge value: ', this._dataChange.value);
       this.filteredData = this._dataChange.value.slice().filter((item: TokenTableItem) => {
         const searchStr = (item.symbol + item.name).toLowerCase();
         return searchStr.indexOf(this.filter.toLowerCase()) !== -1;
       });
-      console.log('####DataSource connect merge filteredData: ', this.filteredData);
         // Sort filtered data
         const sortedData = this.getSortedData(this.filteredData.slice());
-        console.log('####DataSource connect merge sortedData: ', sortedData);
 
         // Grab the page's slice of the filtered sorted data.
         const startIndex = this._paginator.pageIndex * this._paginator.pageSize;
         this.renderedData = sortedData.splice(startIndex, this._paginator.pageSize);
-        console.log('####DataSource connect merge renderedData: ', this.renderedData);
         return this.renderedData;
       }
     ));

@@ -14,7 +14,6 @@ export class DataService {
 
 
   getAllItems(): Observable<TokenTableItem[]> {
-    console.log('####DataServie getAllItems tokenTableItems$: ', this.tokenTableItems$);
     const sources = [
       this.tokenTableItems$,
       this.initValue

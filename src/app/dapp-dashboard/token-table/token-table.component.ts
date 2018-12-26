@@ -10,12 +10,7 @@ import { fromEvent } from 'rxjs';
   styleUrls: ['./token-table.component.scss'],
 })
 export class TokenTableComponent implements OnInit {
-  /* pageSizeOptions = [5, 10, 20, 40];
-  pageSize = this.pageSizeOptions[0];
-  pageIndex = 0;
-  tableLength = 0; */
 
-  /** Columns displayed in the table. Columns IDs can be added, removed, or reordered. */
   displayedColumns = ['symbol', 'name'];
 
   _internalService: DataService | null;
@@ -28,38 +23,22 @@ export class TokenTableComponent implements OnInit {
   @ViewChild('filter') filter: ElementRef;
 
   ngOnInit(): void {
-    console.log('####AppComponent onInit this._internalService: ', this._internalService);
-    console.log('####AppComponent onInit this.dataSource: ', this.dataSource);
-    console.log('####AppComponent onInit this.displayedColumns: ', this.displayedColumns);
-    console.log('####AppComponent onInit this.filter: ', this.filter);
-    console.log('####AppComponent onInit this.paginator: ', this.paginator);
-    console.log('####AppComponent onInit this.sort: ', this.sort);
     this.loadData();
   }
 
   refresh(): void {
-    console.log('####AppComponent onInit this._internalService: ', this._internalService);
-    console.log('####AppComponent onInit this.dataSource: ', this.dataSource);
-    console.log('####AppComponent onInit this.displayedColumns: ', this.displayedColumns);
-    console.log('####AppComponent onInit this.filter: ', this.filter);
-    console.log('####AppComponent onInit this.paginator: ', this.paginator);
-    console.log('####AppComponent onInit this.sort: ', this.sort);
     this.loadData();
   }
 
   private loadData(): any {
     this._internalService = new DataService();
-    console.log('####AppComponent loadData this._internalService: ', this._internalService);
     this.dataSource = new TokenTableDataSource(this._internalService, this.paginator, this.sort);
     fromEvent(this.filter.nativeElement, 'keyup')
       .subscribe(() => {
         if (!this.dataSource) {
-          console.log('####AppComponent loadData fromEvent subscribe in if');
           return;
         }
-        console.log('####AppComponent loadData fromEvent subscribe this.filter.nativeElement.value: ', this.filter.nativeElement.value);
         this.dataSource.filter = this.filter.nativeElement.value;
-        console.log('####AppComponent loadData fromEvent subscribe this.dataSource.filter: ', this.dataSource.filter);
       });
   }
 }
