@@ -1,4 +1,14 @@
-.current-blocks {
-  margin-left: auto;
-  margin-right: 0;
+.home-link {
+  text-decoration: none;
+  color: whitesmoke;
+}
+
+.primary-toolbar {
+  position: fixed;
+  top: 0;
+  z-index: 99;
+}
+
+.secondary-toolbar {
+  padding: 100px 0 48px 32px;
 }
