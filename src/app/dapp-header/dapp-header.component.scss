@@ -1,6 +1,13 @@
 .home-link {
   text-decoration: none;
+  text-align: center;
   color: whitesmoke;
+  display: flex;
+  align-items: center;
+}
+
+.header-text {
+  margin-left: 5%;
 }
 
 .primary-toolbar {
