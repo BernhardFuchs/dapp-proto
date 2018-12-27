@@ -1,0 +1,40 @@
+.general-info {
+  height: 32px;
+  display: block;
+  padding-left: 2%;
+  font-weight: 500;
+  font-size: 20px;
+  line-height: 32px;
+
+  &__container {
+    margin-top: 2%;
+    margin-bottom: 2%;
+  }
+
+  &__result-box {
+    display: flex;
+  }
+  
+  &__address-label {
+    @extend .general-info;
+    background: yellow;
+  }
+
+  &__address-value {
+    @extend .general-info;
+    background: greenyellow;
+    font-size: 14px;
+  }
+
+  &__balance-label {
+    @extend .general-info;
+    background: red;
+  }
+
+  &__balance-value {
+    @extend .general-info;
+    background: seagreen;
+    font-size: 14px;
+  }
+
+}

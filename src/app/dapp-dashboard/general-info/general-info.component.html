@@ -1,0 +1,19 @@
+<div class="general-info__container">
+  <span class="general-info__result-box">
+    <span class="general-info__address-label">
+      Address:
+    </span>
+    <span class="general-info__address-value">
+      {{ address$ | async }}
+    </span>
+  </span>
+  
+  <span class="general-info__result-box">
+    <span class="general-info__balance-label">
+      Balance:
+    </span>
+    <span class="general-info__balance-value">
+      {{ balance$ | async | ether }}
+    </span>
+  </span>
+</div>
