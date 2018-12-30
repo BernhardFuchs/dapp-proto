@@ -10,5 +10,9 @@ exec(`git add .`,
     exec(`git commit -m ${commitMessage}`, (error, stdout, stderr) => {
       handleError(error);
       logstd(stdout, stderr);
+      exec(`git push`, (error, stdout, stderr) => {
+        handleError(error);
+        logstd(stdout, stderr);
+      })
     })
   }); 
