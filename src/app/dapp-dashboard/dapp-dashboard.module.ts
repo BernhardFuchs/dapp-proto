@@ -7,6 +7,7 @@ import { GuiModule } from '../gui/gui.module';
 import { SharedModule } from '../shared/shared.module';
 import { DappDashboardComponent } from './dapp-dashboard.component';
 import { TokenTableComponent } from './token-table/token-table.component';
+import { GeneralInfoComponent } from './general-info/general-info.component';
 
 const routes = [
   {
@@ -18,7 +19,8 @@ const routes = [
 @NgModule({
   declarations: [
     TokenTableComponent,
-    DappDashboardComponent
+    DappDashboardComponent,
+    GeneralInfoComponent
   ],
   entryComponents: [
     DappDashboardComponent

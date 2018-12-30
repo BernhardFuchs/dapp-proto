@@ -1,5 +1,4 @@
 <div class="dashboard-container">
-  <div>Address: {{ address$ | async }}</div>
-  <div>Balance: {{ balance$ | async | ether }}</div>
+  <app-general-info></app-general-info>
   <app-token-table></app-token-table>
 </div>
