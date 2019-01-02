@@ -1,7 +1,7 @@
 require('colors');
 const exec = require('child_process').exec;
 
-const commitMessage = 'git Page deploy';
+const commitMessage = 'GitPage deploy';
 console.log(`Committing with message ${commitMessage}`.bgGreen);
 exec(`git add .`,
   (error, stdout, stderr) => {
@@ -15,4 +15,16 @@ exec(`git add .`,
         logstd(stdout, stderr);
       })
     })
-  }); 
+  });
+
+  const logstd = (stdout, stderr) => {
+    console.log(`${stdout}`.green);
+    console.log(`${stderr}`.bgRed);
+  }
+  
+  const handleError = (error) => {
+    if (error !== null) {
+      console.log(`${error}`.red);
+      process.exit(1);
+    }
+  }
