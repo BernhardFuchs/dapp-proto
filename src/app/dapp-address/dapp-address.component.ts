@@ -1,19 +1,16 @@
 import { Component, OnInit } from '@angular/core';
 import { FormControl, Validators } from '@angular/forms';
 import { Store } from '@ngxs/store';
-import { Router } from '@angular/router';
 
 import { AddressInfoFetchAction } from '../dapp-store/address-info.actions';
-import * as styles from './dapp-address.styles';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-dapp-address',
-  templateUrl: './dapp-address.component.html'
+  templateUrl: './dapp-address.component.html',
+  styleUrls: ['./dapp-address.component.scss']
 })
 export class DappAddressComponent implements OnInit {
-
-  public address_container: any = styles.address_container;
-  public address_formField: any = styles.address_formField;
 
   constructor(
     private store$: Store,
