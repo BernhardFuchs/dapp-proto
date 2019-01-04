@@ -2,7 +2,7 @@ import { DataSource } from '@angular/cdk/collections';
 import { MatPaginator, MatSort } from '@angular/material';
 import { map } from 'rxjs/operators';
 import { Observable, merge, BehaviorSubject } from 'rxjs';
-import { TokenTableItem } from 'src/app/dapp-store/token-table.state.model';
+import { TokenTableViewItem } from 'src/app/dapp-store/token-table.state.model';
 import { DataService } from 'src/app/services/data.service';
 import { Injectable } from '@angular/core';
 
@@ -14,9 +14,9 @@ import { Injectable } from '@angular/core';
 @Injectable({
   providedIn: 'root'
 })
-export class TokenTableDataSource extends DataSource<TokenTableItem> {
-  _dataChange: BehaviorSubject<TokenTableItem[]> = new BehaviorSubject<
-    TokenTableItem[]
+export class TokenTableDataSource extends DataSource<TokenTableViewItem> {
+  _dataChange: BehaviorSubject<TokenTableViewItem[]> = new BehaviorSubject<
+    TokenTableViewItem[]
   >([]);
   _filterChange = new BehaviorSubject('');
 
@@ -28,8 +28,8 @@ export class TokenTableDataSource extends DataSource<TokenTableItem> {
     this._filterChange.next(filter);
   }
 
-  filteredData: TokenTableItem[] = [];
-  renderedData: TokenTableItem[] = [];
+  filteredData: TokenTableViewItem[] = [];
+  renderedData: TokenTableViewItem[] = [];
 
   constructor(
     public _internalService: DataService,
@@ -45,7 +45,7 @@ export class TokenTableDataSource extends DataSource<TokenTableItem> {
    * the returned stream emits new items.
    * @returns A stream of the items to be rendered.
    */
-  connect(): Observable<TokenTableItem[]> {
+  connect(): Observable<TokenTableViewItem[]> {
     // Combine everything that affects the rendered data into one update
     // stream for the data-table to consume.
     const dataMutations = [
@@ -64,7 +64,7 @@ export class TokenTableDataSource extends DataSource<TokenTableItem> {
         // Filter data
         this.filteredData = this._dataChange.value
           .slice()
-          .filter((item: TokenTableItem) => {
+          .filter((item: TokenTableViewItem) => {
             const searchStr = (item.symbol + item.name).toLowerCase();
             return searchStr.indexOf(this.filter.toLowerCase()) !== -1;
           });
@@ -93,7 +93,7 @@ export class TokenTableDataSource extends DataSource<TokenTableItem> {
    * Paginate the data (client-side). If you're using server-side pagination,
    * this would be replaced by requesting the appropriate data from the server.
    */
-  private getPagedData(data: TokenTableItem[]): TokenTableItem[] {
+  private getPagedData(data: TokenTableViewItem[]): TokenTableViewItem[] {
     const startIndex = this._paginator.pageIndex * this._paginator.pageSize;
     this.adjustPaginatorValues(startIndex);
     return data.splice(startIndex, this._paginator.pageSize);
@@ -103,7 +103,7 @@ export class TokenTableDataSource extends DataSource<TokenTableItem> {
    * Sort the data (client-side). If you're using server-side sorting,
    * this would be replaced by requesting the appropriate data from the server.
    */
-  private getSortedData(data: TokenTableItem[]): TokenTableItem[] {
+  private getSortedData(data: TokenTableViewItem[]): TokenTableViewItem[] {
     if (!this._sort.active || this._sort.direction === '') {
       return data;
     }

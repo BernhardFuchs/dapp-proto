@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
-import {BehaviorSubject, Observable, merge} from 'rxjs';
-import { TokenTableItem } from '../dapp-store/token-table.state.model';
+import { BehaviorSubject, Observable, merge } from 'rxjs';
+import { TokenTableViewItem } from '../dapp-store/token-table.state.model';
 import { TokenTableState } from '../dapp-store/token-table.state';
 import { Select } from '@ngxs/store';
 
@@ -9,15 +9,13 @@ import { Select } from '@ngxs/store';
 })
 export class DataService {
   @Select(TokenTableState.getTokenTableItems)
-  private tokenTableItems$: Observable<TokenTableItem[]>;
-  private initValue: BehaviorSubject<TokenTableItem[]> = new BehaviorSubject<TokenTableItem[]>([]);
+  private tokenTableItems$!: Observable<TokenTableViewItem[]>;
+  private initValue: BehaviorSubject<
+    TokenTableViewItem[]
+  > = new BehaviorSubject<TokenTableViewItem[]>([]);
 
-
-  getAllItems(): Observable<TokenTableItem[]> {
-    const sources = [
-      this.tokenTableItems$,
-      this.initValue
-    ];
+  getAllItems(): Observable<TokenTableViewItem[]> {
+    const sources = [this.tokenTableItems$, this.initValue];
     return merge(...sources);
   }
 }

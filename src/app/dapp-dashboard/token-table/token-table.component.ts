@@ -1,6 +1,6 @@
 import { Component, OnInit, ViewChild, ElementRef } from '@angular/core';
-import { MatPaginator, MatSort, PageEvent } from '@angular/material';
-import { TokenTableDataSource } from './token-table-datasource';
+import { MatPaginator, MatSort } from '@angular/material';
+import { TokenTableDataSource } from './token-table.datasource';
 import { DataService } from 'src/app/services/data.service';
 import { fromEvent } from 'rxjs';
 
@@ -10,19 +10,19 @@ import { fromEvent } from 'rxjs';
   styleUrls: ['./token-table.component.scss']
 })
 export class TokenTableComponent implements OnInit {
-  displayedColumns = ['symbol', 'name'];
+  loadedColumns = ['symbol', 'name', 'balance', 'rate'];
   pageSizeOptions = [5, 10, 20, 40];
   pageSize = this.pageSizeOptions[0];
   pageIndex = 0;
 
-  _internalService: DataService | null;
-  dataSource: TokenTableDataSource | null;
+  _internalService!: DataService | null;
+  dataSource!: TokenTableDataSource | null;
 
   constructor() {}
 
-  @ViewChild(MatPaginator) paginator: MatPaginator;
-  @ViewChild(MatSort) sort: MatSort;
-  @ViewChild('filter') filter: ElementRef;
+  @ViewChild(MatPaginator) paginator!: MatPaginator;
+  @ViewChild(MatSort) sort!: MatSort;
+  @ViewChild('filter') filter!: ElementRef;
 
   ngOnInit(): void {
     this.loadData();

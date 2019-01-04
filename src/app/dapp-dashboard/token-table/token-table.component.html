@@ -27,8 +27,18 @@
       <mat-cell *matCellDef="let row">{{row.name}}</mat-cell>
     </ng-container>
 
-    <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
-    <mat-row *matRowDef="let row; columns: displayedColumns;"></mat-row>
+    <ng-container matColumnDef="balance">
+      <mat-header-cell *matHeaderCellDef mat-sort-header>Balance</mat-header-cell>
+      <mat-cell *matCellDef="let row">{{row.balance}}</mat-cell>
+    </ng-container>
+
+    <ng-container matColumnDef="rate">
+      <mat-header-cell *matHeaderCellDef mat-sort-header>Rate</mat-header-cell>
+      <mat-cell *matCellDef="let row">{{row.rate}}</mat-cell>
+    </ng-container>
+
+    <mat-header-row *matHeaderRowDef="loadedColumns"></mat-header-row>
+    <mat-row *matRowDef="let row; columns: loadedColumns;"></mat-row>
   </mat-table>
 
   <div class="no-results" [style.display]="dataSource.renderedData.length == 0 ? '' : 'none'">

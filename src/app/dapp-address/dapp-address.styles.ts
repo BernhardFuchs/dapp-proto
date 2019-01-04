@@ -1,5 +1,5 @@
 import { style, media } from 'typestyle';
-import { mediaBreakWidth } from '../core/base.styles';
+import { mediaBreakWidth } from '@core/base.styles';
 
 export const address_container = style(
   {
@@ -7,17 +7,21 @@ export const address_container = style(
     flexDirection: 'column',
     margin: '2% 3%'
   },
-  media({minWidth: mediaBreakWidth},
-  {
-    display: 'flex',
-    flexDirection: 'row'
-  })
+  media(
+    { minWidth: mediaBreakWidth },
+    {
+      display: 'flex',
+      flexDirection: 'row'
+    }
+  )
 );
 
 export const address_formField = style(
-  media({minWidth: mediaBreakWidth},
+  media(
+    { minWidth: mediaBreakWidth },
     {
       flexBasis: '300px',
       marginRight: '5px'
-    })
+    }
+  )
 );
