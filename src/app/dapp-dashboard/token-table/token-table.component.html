@@ -37,8 +37,8 @@
       <mat-cell *matCellDef="let row">{{row.rate}}</mat-cell>
     </ng-container>
 
-    <mat-header-row *matHeaderRowDef="loadedColumns"></mat-header-row>
-    <mat-row *matRowDef="let row; columns: loadedColumns;"></mat-row>
+    <mat-header-row *matHeaderRowDef="getDisplayedColumns()"></mat-header-row>
+    <mat-row *matRowDef="let row; columns: getDisplayedColumns();"></mat-row>
   </mat-table>
 
   <div class="no-results" [style.display]="dataSource.renderedData.length == 0 ? '' : 'none'">

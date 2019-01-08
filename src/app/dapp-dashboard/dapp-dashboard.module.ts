@@ -1,7 +1,12 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { RouterModule } from '@angular/router';
-import { MatTableModule, MatPaginatorModule, MatSortModule } from '@angular/material';
+import {
+  MatTableModule,
+  MatPaginatorModule,
+  MatSortModule
+} from '@angular/material';
+import { FlexLayoutModule } from '@angular/flex-layout';
 
 import { GuiModule } from '../gui/gui.module';
 import { SharedModule } from '../shared/shared.module';
@@ -22,9 +27,7 @@ const routes = [
     DappDashboardComponent,
     GeneralInfoComponent
   ],
-  entryComponents: [
-    DappDashboardComponent
-  ],
+  entryComponents: [DappDashboardComponent],
   imports: [
     RouterModule.forChild(routes),
     CommonModule,
@@ -32,7 +35,8 @@ const routes = [
     GuiModule,
     MatTableModule,
     MatPaginatorModule,
-    MatSortModule
+    MatSortModule,
+    FlexLayoutModule
   ]
 })
 export class DappDashboardModule {}

@@ -1,8 +1,12 @@
 import { Component, OnInit, ViewChild, ElementRef } from '@angular/core';
 import { MatPaginator, MatSort } from '@angular/material';
+import { MediaObserver, MediaChange } from '@angular/flex-layout';
+import { fromEvent } from 'rxjs';
+
+import { mediaBreakWidth } from '@core/base.styles';
 import { TokenTableDataSource } from './token-table.datasource';
 import { DataService } from 'src/app/services/data.service';
-import { fromEvent } from 'rxjs';
+import { filter, tap } from 'rxjs/operators';
 
 @Component({
   selector: 'app-token-table',
@@ -10,7 +14,13 @@ import { fromEvent } from 'rxjs';
   styleUrls: ['./token-table.component.scss']
 })
 export class TokenTableComponent implements OnInit {
-  loadedColumns = ['symbol', 'name', 'balance', 'rate'];
+  private status = '';
+  loadedColumns = [
+    { def: 'symbol', mobile: true },
+    { def: 'name', mobile: true },
+    { def: 'balance', mobile: false },
+    { def: 'rate', mobile: true }
+  ];
   pageSizeOptions = [5, 10, 20, 40];
   pageSize = this.pageSizeOptions[0];
   pageIndex = 0;
@@ -18,7 +28,19 @@ export class TokenTableComponent implements OnInit {
   _internalService!: DataService | null;
   dataSource!: TokenTableDataSource | null;
 
-  constructor() {}
+  constructor(private mediaObserver: MediaObserver) {
+    const onChange = (change: MediaChange) => {
+      this.status = change ? `${change.mqAlias}` : '';
+    };
+    this.mediaObserver.media$
+      .pipe(
+        tap((change: MediaChange) => {
+          console.log(change);
+          this.getDisplayedColumns();
+        })
+      )
+      .subscribe(onChange);
+  }
 
   @ViewChild(MatPaginator) paginator!: MatPaginator;
   @ViewChild(MatSort) sort!: MatSort;
@@ -30,6 +52,13 @@ export class TokenTableComponent implements OnInit {
 
   refresh(): void {
     this.loadData();
+  }
+
+  getDisplayedColumns(): string[] {
+    const isMobile = this.status === 'xs';
+    return this.loadedColumns
+      .filter(cd => !isMobile || cd.mobile)
+      .map(cd => cd.def);
   }
 
   private loadData(): any {
