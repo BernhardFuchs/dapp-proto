@@ -2,7 +2,7 @@ import { DataSource } from '@angular/cdk/collections';
 import { MatPaginator, MatSort } from '@angular/material';
 import { map } from 'rxjs/operators';
 import { Observable, merge, BehaviorSubject } from 'rxjs';
-import { TokenTableItem } from 'src/app/dapp-store/token-table.state.model';
+import { TokenTableViewItem } from 'src/app/dapp-store/token-table.state.model';
 import { DataService } from 'src/app/services/data.service';
 import { Injectable } from '@angular/core';
 
@@ -11,11 +11,13 @@ import { Injectable } from '@angular/core';
  * encapsulate all logic for fetching and manipulating the displayed data
  * (including sorting, pagination, and filtering).
  */
- @Injectable({
+@Injectable({
   providedIn: 'root'
 })
-export class TokenTableDataSource extends DataSource<TokenTableItem> {
-  _dataChange: BehaviorSubject<TokenTableItem[]> = new BehaviorSubject<TokenTableItem[]>([]);
+export class TokenTableDataSource extends DataSource<TokenTableViewItem> {
+  _dataChange: BehaviorSubject<TokenTableViewItem[]> = new BehaviorSubject<
+    TokenTableViewItem[]
+  >([]);
   _filterChange = new BehaviorSubject('');
 
   get filter(): string {
@@ -26,12 +28,16 @@ export class TokenTableDataSource extends DataSource<TokenTableItem> {
     this._filterChange.next(filter);
   }
 
-  filteredData: TokenTableItem[] = [];
-  renderedData: TokenTableItem[] = [];
+  filteredData: TokenTableViewItem[] = [];
+  renderedData: TokenTableViewItem[] = [];
 
-  constructor(public _internalService: DataService, public _paginator: MatPaginator, public _sort: MatSort) {
+  constructor(
+    public _internalService: DataService,
+    public _paginator: MatPaginator,
+    public _sort: MatSort
+  ) {
     super();
-    this._filterChange.subscribe(() => this._paginator.pageIndex = 0);
+    this._filterChange.subscribe(() => (this._paginator.pageIndex = 0));
   }
 
   /**
@@ -39,37 +45,37 @@ export class TokenTableDataSource extends DataSource<TokenTableItem> {
    * the returned stream emits new items.
    * @returns A stream of the items to be rendered.
    */
-  connect(): Observable<TokenTableItem[]> {
-
+  connect(): Observable<TokenTableViewItem[]> {
     // Combine everything that affects the rendered data into one update
     // stream for the data-table to consume.
     const dataMutations = [
       this._dataChange,
       this._sort.sortChange,
       this._filterChange,
-      this._paginator.page,
+      this._paginator.page
     ];
 
     this._internalService.getAllItems().subscribe(data => {
       this._dataChange.next(data);
     });
 
-    return merge(...dataMutations).pipe(map( () => {
-      // Filter data
-      this.filteredData = this._dataChange.value.slice().filter((item: TokenTableItem) => {
-        const searchStr = (item.symbol + item.name).toLowerCase();
-        return searchStr.indexOf(this.filter.toLowerCase()) !== -1;
-      });
+    return merge(...dataMutations).pipe(
+      map(() => {
+        // Filter data
+        this.filteredData = this._dataChange.value
+          .slice()
+          .filter((item: TokenTableViewItem) => {
+            const searchStr = (item.symbol + item.name).toLowerCase();
+            return searchStr.indexOf(this.filter.toLowerCase()) !== -1;
+          });
         // Sort filtered data
         const sortedData = this.getSortedData(this.filteredData.slice());
 
         // Grab the page's slice of the filtered sorted data.
-        const startIndex = this._paginator.pageIndex * this._paginator.pageSize;
-        this.renderedData = sortedData.splice(startIndex, this._paginator.pageSize);
+        this.renderedData = this.getPagedData(sortedData);
         return this.renderedData;
-      }
-    ));
-
+      })
+    );
   }
 
   /**
@@ -78,12 +84,18 @@ export class TokenTableDataSource extends DataSource<TokenTableItem> {
    */
   disconnect() {}
 
+  private adjustPaginatorValues(startIndex: number): void {
+    if (this._dataChange.value.length < startIndex) {
+      this._paginator.pageIndex = 0;
+    }
+  }
   /**
    * Paginate the data (client-side). If you're using server-side pagination,
    * this would be replaced by requesting the appropriate data from the server.
    */
-  private getPagedData(data: TokenTableItem[]): TokenTableItem[] {
+  private getPagedData(data: TokenTableViewItem[]): TokenTableViewItem[] {
     const startIndex = this._paginator.pageIndex * this._paginator.pageSize;
+    this.adjustPaginatorValues(startIndex);
     return data.splice(startIndex, this._paginator.pageSize);
   }
 
@@ -91,7 +103,7 @@ export class TokenTableDataSource extends DataSource<TokenTableItem> {
    * Sort the data (client-side). If you're using server-side sorting,
    * this would be replaced by requesting the appropriate data from the server.
    */
-  private getSortedData(data: TokenTableItem[]): TokenTableItem[] {
+  private getSortedData(data: TokenTableViewItem[]): TokenTableViewItem[] {
     if (!this._sort.active || this._sort.direction === '') {
       return data;
     }
@@ -99,10 +111,13 @@ export class TokenTableDataSource extends DataSource<TokenTableItem> {
     return data.sort((a, b) => {
       const isAsc = this._sort.direction === 'asc';
       switch (this._sort.active) {
-        case 'symbol': return compare(a.symbol, b.symbol, isAsc);
-        case 'name': return compare(a.name, b.name, isAsc);
+        case 'symbol':
+          return compare(a.symbol, b.symbol, isAsc);
+        case 'name':
+          return compare(a.name, b.name, isAsc);
         // case 'id': return compare(+a.id, +b.id, isAsc);
-        default: return 0;
+        default:
+          return 0;
       }
     });
   }
