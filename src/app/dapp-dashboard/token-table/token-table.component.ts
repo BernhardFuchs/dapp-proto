@@ -1,20 +1,26 @@
-import { Component, OnInit, ViewChild, ElementRef } from '@angular/core';
+import {
+  Component,
+  OnInit,
+  ViewChild,
+  ElementRef,
+  OnDestroy
+} from '@angular/core';
 import { MatPaginator, MatSort } from '@angular/material';
-import { MediaObserver, MediaChange } from '@angular/flex-layout';
-import { fromEvent } from 'rxjs';
+import { fromEvent, Subject } from 'rxjs';
 
-import { mediaBreakWidth } from '@core/base.styles';
 import { TokenTableDataSource } from './token-table.datasource';
 import { DataService } from 'src/app/services/data.service';
-import { filter, tap } from 'rxjs/operators';
+import { MediaService, MediaSize } from 'src/app/shared/media.service';
+import { takeUntil } from 'rxjs/operators';
 
 @Component({
   selector: 'app-token-table',
   templateUrl: './token-table.component.html',
   styleUrls: ['./token-table.component.scss']
 })
-export class TokenTableComponent implements OnInit {
-  private status = '';
+export class TokenTableComponent implements OnInit, OnDestroy {
+  private currentMedia = '';
+  private _unsubscribe$: Subject<any>;
   loadedColumns = [
     { def: 'symbol', mobile: true },
     { def: 'name', mobile: true },
@@ -28,18 +34,14 @@ export class TokenTableComponent implements OnInit {
   _internalService!: DataService | null;
   dataSource!: TokenTableDataSource | null;
 
-  constructor(private mediaObserver: MediaObserver) {
-    const onChange = (change: MediaChange) => {
-      this.status = change ? `${change.mqAlias}` : '';
-    };
-    this.mediaObserver.media$
-      .pipe(
-        tap((change: MediaChange) => {
-          console.log(change);
-          this.getDisplayedColumns();
-        })
-      )
-      .subscribe(onChange);
+  constructor(private mediaService: MediaService) {
+    this.mediaService
+      .getMediaSize()
+      .pipe(takeUntil(this._unsubscribe$))
+      .subscribe((mediaSize: MediaSize) => {
+        this.currentMedia = mediaSize.current;
+        this.getDisplayedColumns();
+      });
   }
 
   @ViewChild(MatPaginator) paginator!: MatPaginator;
@@ -49,16 +51,23 @@ export class TokenTableComponent implements OnInit {
   ngOnInit(): void {
     this.loadData();
   }
+  ngOnDestroy(): void {
+    this._unsubscribe$.next();
+    this._unsubscribe$.unsubscribe();
+  }
 
   refresh(): void {
     this.loadData();
   }
 
   getDisplayedColumns(): string[] {
-    const isMobile = this.status === 'xs';
     return this.loadedColumns
-      .filter(cd => !isMobile || cd.mobile)
+      .filter(column => !this.isMobile() || column.mobile)
       .map(cd => cd.def);
+  }
+
+  private isMobile(): boolean {
+    return this.currentMedia === MediaSize.XS;
   }
 
   private loadData(): any {
