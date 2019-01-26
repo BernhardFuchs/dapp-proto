@@ -1,26 +1,19 @@
-import {
-  Component,
-  OnInit,
-  ViewChild,
-  ElementRef,
-  OnDestroy
-} from '@angular/core';
+import { Component, OnInit, ViewChild, ElementRef } from '@angular/core';
 import { MatPaginator, MatSort } from '@angular/material';
-import { fromEvent, Subject } from 'rxjs';
+import { fromEvent } from 'rxjs';
 
 import { TokenTableDataSource } from './token-table.datasource';
 import { DataService } from 'src/app/services/data.service';
-import { MediaService, MediaSize } from 'src/app/shared/media.service';
-import { takeUntil } from 'rxjs/operators';
+import { MediaService } from 'src/app/shared/media.service';
+import { MediaSize } from 'src/app/shared/media-size';
 
 @Component({
   selector: 'app-token-table',
   templateUrl: './token-table.component.html',
   styleUrls: ['./token-table.component.scss']
 })
-export class TokenTableComponent implements OnInit, OnDestroy {
-  private currentMedia = '';
-  private _unsubscribe$: Subject<any>;
+export class TokenTableComponent implements OnInit {
+  private _currentMedia = '';
   loadedColumns = [
     { def: 'symbol', mobile: true },
     { def: 'name', mobile: true },
@@ -31,17 +24,14 @@ export class TokenTableComponent implements OnInit, OnDestroy {
   pageSize = this.pageSizeOptions[0];
   pageIndex = 0;
 
-  _internalService!: DataService | null;
+  private _dataService!: DataService | null;
   dataSource!: TokenTableDataSource | null;
 
   constructor(private mediaService: MediaService) {
-    this.mediaService
-      .getMediaSize()
-      .pipe(takeUntil(this._unsubscribe$))
-      .subscribe((mediaSize: MediaSize) => {
-        this.currentMedia = mediaSize.current;
-        this.getDisplayedColumns();
-      });
+    this.mediaService.getMediaSize().subscribe((mediaSize: MediaSize) => {
+      this._currentMedia = mediaSize.current;
+      this.getDisplayedColumns();
+    });
   }
 
   @ViewChild(MatPaginator) paginator!: MatPaginator;
@@ -50,10 +40,6 @@ export class TokenTableComponent implements OnInit, OnDestroy {
 
   ngOnInit(): void {
     this.loadData();
-  }
-  ngOnDestroy(): void {
-    this._unsubscribe$.next();
-    this._unsubscribe$.unsubscribe();
   }
 
   refresh(): void {
@@ -67,13 +53,13 @@ export class TokenTableComponent implements OnInit, OnDestroy {
   }
 
   private isMobile(): boolean {
-    return this.currentMedia === MediaSize.XS;
+    return this._currentMedia === MediaSize.XS;
   }
 
   private loadData(): any {
-    this._internalService = new DataService();
+    this._dataService = new DataService();
     this.dataSource = new TokenTableDataSource(
-      this._internalService,
+      this._dataService,
       this.paginator,
       this.sort
     );
