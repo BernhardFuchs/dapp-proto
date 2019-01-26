@@ -4,8 +4,7 @@ import { fromEvent } from 'rxjs';
 
 import { TokenTableDataSource } from './token-table.datasource';
 import { DataService } from 'src/app/services/data.service';
-import { MediaService } from 'src/app/shared/media.service';
-import { MediaSize } from 'src/app/shared/media-size';
+import { MediaService, MediaSize } from 'src/app/shared/media.service';
 
 @Component({
   selector: 'app-token-table',
