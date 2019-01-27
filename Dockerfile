@@ -1,7 +1,7 @@
 ARG version=3.8
 FROM alpine:${version}
 
-MAINTAINER Bernhard Fuchs <develper.bernifox@gmail.com>
+LABEL Author="Bernhard Fuchs <developer.bernifox@gmail.com>"
 
 RUN apk add --update \
   && apk add curl \
@@ -14,17 +14,17 @@ RUN apk add --update nginx \
   && mkdir /www \
   && rm -rf /var/cache/apk/*
 
-CMD [ "adduser", "-D -g", "'www' www"  ]
+RUN [ "adduser", "-D -g", "'www' www"  ]
 
-CMD [ "chown", "-R", "www:www /var/lib/nginx" ]
+RUN [ "chown", "-R", "www:www /var/lib/nginx" ]
 
-CMD [ "chown", "-R", "www:www /www" ]
+RUN [ "chown", "-R", "www:www /www" ]
 
-CMD [ "mv", "/etc/nginx/nginx.conf /etc/nginx/nginx.conf.orig" ]
+RUN [ "mv", "/etc/nginx/nginx.conf /etc/nginx/nginx.conf.orig" ]
 
 # COPY ./nginx.conf /etc/nginx/nginx.conf
 
 #COPY ./dist/dapp-proto/* /www/
 
 EXPOSE 80 443
-CMD ["nginx", "-g", "daemon off;"]
+RUN ["nginx", "-g", "daemon off;"]
