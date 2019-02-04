@@ -4,7 +4,6 @@
 /src/confidential
 
 # compiled output
-/dist
 /tmp
 /out-tsc
 /docker/dist
