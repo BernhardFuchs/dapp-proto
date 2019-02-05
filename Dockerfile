@@ -93,7 +93,7 @@ RUN set -x \
 RUN ln -sf /dev/stdout /var/log/nginx/access.log \
   && ln -sf /dev/stderr /var/log/nginx/error.log
 
-EXPOSE 32700:80 32700:443
+EXPOSE 80 443
 
 STOPSIGNAL SIGTERM
 
