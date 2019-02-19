@@ -4,6 +4,7 @@
   "scripts": {
     "ng": "ng",
     "start": "ng serve",
+    "start:prod": "ng build --prod && http-server ./dist/dapp-proto --ssl",
     "build": "ng build",
     "test": "ng test",
     "lint": "ng lint",
@@ -25,7 +26,9 @@
     "@angular/material": "^7.1.0",
     "@angular/platform-browser": "~7.1.0",
     "@angular/platform-browser-dynamic": "~7.1.0",
+    "@angular/pwa": "^0.13.1",
     "@angular/router": "~7.1.0",
+    "@angular/service-worker": "~7.1.0",
     "@ngxs/devtools-plugin": "^3.3.2",
     "@ngxs/store": "^3.3.2",
     "core-js": "^2.5.4",
