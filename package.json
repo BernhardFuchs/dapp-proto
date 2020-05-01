@@ -12,7 +12,9 @@
     "docker:prepare": "docker build -t nginx-server -f ./docker/Dockerfile . && docker stop dapp && docker rm dapp && docker run --name dapp -p 32700:443 -d nginx-server:latest ",
     "docker:deploy": "docker cp ./docker/nginx.conf dapp:/etc/nginx/nginx.conf && docker cp ./dist/dapp-proto/. dapp:/usr/share/nginx/html && docker cp ~/ssl/. dapp:/etc/nginx/ssl",
     "docker:reload": "docker container exec dapp nginx -s reload",
-    "postinstall": "node ./scripts/crypto.patch.js"
+    "postinstall": "node ./scripts/crypto.patch.js",
+    "snyk-protect": "snyk protect",
+    "prepare": "npm run snyk-protect"
   },
   "private": true,
   "dependencies": {
@@ -36,7 +38,8 @@
     "lodash": "^4.17.11",
     "rxjs": "~6.3.3",
     "web3": "^1.0.0-beta.36",
-    "zone.js": "~0.8.26"
+    "zone.js": "~0.8.26",
+    "snyk": "^1.316.1"
   },
   "devDependencies": {
     "@angular-devkit/build-angular": "^0.11.4",
@@ -65,5 +68,6 @@
     "tslint-config-prettier": "^1.17.0",
     "typescript": "~3.1.6",
     "typestyle": "^2.0.1"
-  }
+  },
+  "snyk": true
 }
